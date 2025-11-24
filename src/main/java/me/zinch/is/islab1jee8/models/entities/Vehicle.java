@@ -1,0 +1,140 @@
+package me.zinch.is.islab1jee8.models.entities;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "vehicles")
+public class Vehicle {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Min(1)
+    private int id;
+
+    @Column(nullable = false)
+    @NotBlank
+    private String name;
+
+    @ManyToOne
+    @NotNull
+    private Coordinates coordinates;
+
+    @Column(nullable = false)
+    @NotNull
+    private Date creationDate;
+
+    @Enumerated(EnumType.STRING)
+    private VehicleType type;
+
+    @Column(nullable = false)
+    @Min(1)
+    private int enginePower;
+
+    @Column
+    @Min(1)
+    private Long numberOfWheels;
+
+    @Column
+    @Min(1)
+    private Double capacity;
+
+    @Column
+    @Min(1)
+    private int distanceTravelled;
+
+    @Column
+    @Min(1)
+    private double fuelConsumption;
+
+    @Column(nullable = false)
+    @NotNull
+    private FuelType fuelType;
+
+    @Min(1)
+    public int getId() {
+        return id;
+    }
+
+    public @NotNull Date getCreationDate() {
+        return creationDate;
+    }
+
+    public @NotBlank String getName() {
+        return name;
+    }
+
+    public void setName(@NotBlank String name) {
+        this.name = name;
+    }
+
+    public @NotNull Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(@NotNull Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public VehicleType getType() {
+        return type;
+    }
+
+    public void setType(VehicleType type) {
+        this.type = type;
+    }
+
+    @Min(1)
+    public int getEnginePower() {
+        return enginePower;
+    }
+
+    public void setEnginePower(@Min(1) int enginePower) {
+        this.enginePower = enginePower;
+    }
+
+    public @Min(1) Long getNumberOfWheels() {
+        return numberOfWheels;
+    }
+
+    public void setNumberOfWheels(@Min(1) Long numberOfWheels) {
+        this.numberOfWheels = numberOfWheels;
+    }
+
+    public @Min(1) Double getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(@Min(1) Double capacity) {
+        this.capacity = capacity;
+    }
+
+    @Min(1)
+    public int getDistanceTravelled() {
+        return distanceTravelled;
+    }
+
+    public void setDistanceTravelled(@Min(1) int distanceTravelled) {
+        this.distanceTravelled = distanceTravelled;
+    }
+
+    @Min(1)
+    public double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(@Min(1) double fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
+    }
+
+    public @NotNull FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(@NotNull FuelType fuelType) {
+        this.fuelType = fuelType;
+    }
+}
