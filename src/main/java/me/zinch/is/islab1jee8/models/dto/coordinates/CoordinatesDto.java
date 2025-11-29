@@ -1,17 +1,27 @@
-package me.zinch.is.islab1jee8.models.entities;
+package me.zinch.is.islab1jee8.models.dto.coordinates;
 
-import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
-@Embeddable
-public class CoordinatesId implements Serializable {
+public class CoordinatesDto {
+    private int id;
+
     private double x;
 
     @NotNull
     @Max(910)
     private Double y;
+
+    public CoordinatesDto() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public double getX() {
         return x;

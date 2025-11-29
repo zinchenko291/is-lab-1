@@ -1,13 +1,12 @@
 package me.zinch.is.islab1jee8.server;
 
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
 import me.zinch.is.islab1jee8.exceptions.DeserializingException;
 import org.glassfish.jersey.internal.inject.ExtractorException;
 import org.glassfish.jersey.server.ParamException;
 
-@Provider
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+
 public class ParamExceptionMapper implements ExceptionMapper<ParamException> {
     @Override
     public Response toResponse(ParamException e) {

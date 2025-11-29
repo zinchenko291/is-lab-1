@@ -1,12 +1,14 @@
 package me.zinch.is.islab1jee8.server.params.coordinate_field;
 
+import me.zinch.is.islab1jee8.models.fields.CoordinatesField;
+
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
-import me.zinch.is.islab1jee8.controllers.fields.CoordinatesField;
-
+import javax.ws.rs.ext.Provider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+@Provider
 public class CoordinateFieldParamConverterProvider implements ParamConverterProvider {
     @Override
     public <T> ParamConverter<T> getConverter(Class<T> clazz, Type type, Annotation[] annotations) {

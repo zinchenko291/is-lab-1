@@ -3,7 +3,7 @@ package me.zinch.is.islab1jee8.server.params.vehicle_field;
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
-import me.zinch.is.islab1jee8.controllers.fields.VehicleField;
+import me.zinch.is.islab1jee8.models.fields.VehicleField;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

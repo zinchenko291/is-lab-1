@@ -1,24 +1,21 @@
-package me.zinch.is.islab1jee8.models.dao;
+package me.zinch.is.islab1jee8.models.fields;
 
 import java.util.List;
 
 public class Page<T> {
-    private int total;
+    private long total;
     private List<T> items;
 
-    public Page() {
-    }
-
-    public Page(int total, List<T> items) {
+    public Page(long total, List<T> items) {
         this.total = total;
         this.items = items;
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
     }
 

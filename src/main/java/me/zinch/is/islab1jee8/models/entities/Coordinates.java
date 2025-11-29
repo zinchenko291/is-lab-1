@@ -1,15 +1,14 @@
 package me.zinch.is.islab1jee8.models.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "coordinates")
 public class Coordinates {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
@@ -17,10 +16,15 @@ public class Coordinates {
 
     @Column(nullable = false)
     @NotNull
+    @Max(910)
     private Double y;
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getX() {

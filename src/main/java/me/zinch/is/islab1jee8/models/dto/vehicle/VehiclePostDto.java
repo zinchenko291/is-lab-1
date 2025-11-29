@@ -1,4 +1,4 @@
-package me.zinch.is.islab1jee8.models.dto;
+package me.zinch.is.islab1jee8.models.dto.vehicle;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

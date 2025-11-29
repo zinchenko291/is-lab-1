@@ -1,72 +1,77 @@
 package me.zinch.is.islab1jee8.controllers;
 
+import me.zinch.is.islab1jee8.models.fields.CoordinatesField;
+import me.zinch.is.islab1jee8.models.fields.SortDirection;
+import me.zinch.is.islab1jee8.models.dto.coordinates.CoordinatesWithoutIdDto;
+import me.zinch.is.islab1jee8.services.CoordinatesService;
+
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import me.zinch.is.islab1jee8.controllers.fields.CoordinatesField;
-import me.zinch.is.islab1jee8.models.dao.SortDirection;
-import me.zinch.is.islab1jee8.models.dao.ICoordinatesDao;
-import me.zinch.is.islab1jee8.models.entities.Coordinates;
 
 @Path("/coordinates")
 public class CoordinatesController {
-    private final ICoordinatesDao coordinatesDao;
+    private final CoordinatesService service;
 
     @Inject
-    public CoordinatesController(ICoordinatesDao coordinatesDao) {
-        this.coordinatesDao = coordinatesDao;
+    public CoordinatesController(CoordinatesService service) {
+        this.service = service;
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getCoordinates(
             @QueryParam("field") CoordinatesField field,
             @QueryParam("value") String value,
-            @QueryParam("order_by") SortDirection orderBy,
-            @QueryParam("limit") Integer limit,
-            @QueryParam("offset") Integer offset
+            @QueryParam("orderBy") SortDirection orderBy,
+            @QueryParam("limit") @DefaultValue("50") Integer limit,
+            @QueryParam("offset") @DefaultValue("0") Integer offset
     ) {
-        return Response.ok(
-                coordinatesDao.findAll(field, value, orderBy, limit, offset)
-        ).build();
+        return Response.ok(service.findAll(field, value, orderBy, limit, offset))
+            .build();
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCoordinate(
+            @PathParam("id") Integer id
+    ) {
+        return Response.ok(service.findById(id))
+                .build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createCoordinates(Coordinates coordinates) {
+    public Response createCoordinates(CoordinatesWithoutIdDto coordinates) {
         return Response.status(201)
-                .entity(coordinatesDao.create(coordinates))
+                .entity(service.create(coordinates))
                 .build();
     }
 
     @PUT
+    @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCoordinates(
-            @QueryParam("x") Double x,
-            @QueryParam("y") Double y,
-            Coordinates coordinates
+            @PathParam("id") Integer id,
+            CoordinatesWithoutIdDto coordinates
     ) {
-        Coordinates newCoordinate = new Coordinates();
-        newCoordinate.setX(x);
-        newCoordinate.setY(y);
         return Response.ok()
-                .entity(coordinatesDao.updateById(newCoordinate, coordinates))
+                .entity(service.updateById(id, coordinates))
                 .build();
     }
 
     @DELETE
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteCoordinates(
-            @QueryParam("x") Double x,
-            @QueryParam("y") Double y
+            @PathParam("id") Integer id
     ) {
-        Coordinates coordinate = new Coordinates();
-        coordinate.setX(x);
-        coordinate.setY(y);
         return Response.ok()
-                .entity(coordinatesDao.deleteById(coordinate))
+                .entity(service.deleteById(id))
                 .build();
     }
 }

@@ -3,7 +3,7 @@ package me.zinch.is.islab1jee8.server.params.sort_direction;
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
-import me.zinch.is.islab1jee8.models.dao.SortDirection;
+import me.zinch.is.islab1jee8.models.fields.SortDirection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;

@@ -1,4 +1,4 @@
-package me.zinch.is.islab1jee8.models.dao.fields;
+package me.zinch.is.islab1jee8.models.fields;
 
 import java.util.Objects;
 
