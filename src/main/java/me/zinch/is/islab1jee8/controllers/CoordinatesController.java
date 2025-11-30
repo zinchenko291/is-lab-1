@@ -28,7 +28,8 @@ public class CoordinatesController {
             @QueryParam("limit") @DefaultValue("50") Integer limit,
             @QueryParam("offset") @DefaultValue("0") Integer offset
     ) {
-        return Response.ok(service.findAll(field, value, orderBy, limit, offset))
+        return Response
+                .ok(service.findAll(field, value, orderBy, limit, offset))
             .build();
     }
 
@@ -38,7 +39,8 @@ public class CoordinatesController {
     public Response getCoordinate(
             @PathParam("id") Integer id
     ) {
-        return Response.ok(service.findById(id))
+        return Response
+                .ok(service.findById(id))
                 .build();
     }
 
@@ -46,7 +48,8 @@ public class CoordinatesController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCoordinates(CoordinatesWithoutIdDto coordinates) {
-        return Response.status(201)
+        return Response
+                .status(201)
                 .entity(service.create(coordinates))
                 .build();
     }
@@ -59,8 +62,8 @@ public class CoordinatesController {
             @PathParam("id") Integer id,
             CoordinatesWithoutIdDto coordinates
     ) {
-        return Response.ok()
-                .entity(service.updateById(id, coordinates))
+        return Response
+                .ok(service.updateById(id, coordinates))
                 .build();
     }
 
@@ -70,8 +73,8 @@ public class CoordinatesController {
     public Response deleteCoordinates(
             @PathParam("id") Integer id
     ) {
-        return Response.ok()
-                .entity(service.deleteById(id))
+        return Response
+                .ok(service.deleteById(id))
                 .build();
     }
 }

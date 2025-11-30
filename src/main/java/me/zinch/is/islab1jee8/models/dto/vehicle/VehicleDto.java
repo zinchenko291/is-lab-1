@@ -1,56 +1,47 @@
-package me.zinch.is.islab1jee8.models.entities;
+package me.zinch.is.islab1jee8.models.dto.vehicle;
 
-import javax.persistence.*;
+import me.zinch.is.islab1jee8.models.dto.coordinates.CoordinatesDto;
+import me.zinch.is.islab1jee8.models.entities.FuelType;
+import me.zinch.is.islab1jee8.models.entities.VehicleType;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import java.util.Date;
 
-@Entity
-@Table(name = "vehicles")
-public class Vehicle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class VehicleDto {
     @Min(1)
     private int id;
 
-    @Column(nullable = false)
     @NotBlank
     private String name;
 
-    @ManyToOne
     @NotNull
-    private Coordinates coordinates;
+    private CoordinatesDto coordinates;
 
-    @Column(nullable = false)
     @NotNull
     private Date creationDate;
 
     @Enumerated(EnumType.STRING)
     private VehicleType type;
 
-    @Column(nullable = false)
     @Min(1)
     private int enginePower;
 
-    @Column
     @Min(1)
     private Long numberOfWheels;
 
-    @Column
     @Min(1)
     private Double capacity;
 
-    @Column
     @Min(1)
     private int distanceTravelled;
 
-    @Column
     @Min(1)
     private double fuelConsumption;
 
-    @Column(nullable = false)
     @NotNull
     private FuelType fuelType;
 
@@ -71,11 +62,11 @@ public class Vehicle {
         this.name = name;
     }
 
-    public @NotNull Coordinates getCoordinates() {
+    public @NotNull CoordinatesDto getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(@NotNull Coordinates coordinates) {
+    public void setCoordinates(@NotNull CoordinatesDto coordinates) {
         this.coordinates = coordinates;
     }
 

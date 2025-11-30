@@ -43,20 +43,20 @@ public class CoordinatesService {
         List<Coordinates> coordinates = coordinatesDao.findAllPaged(page, pageSize, filter);
         return new Page<>(
                 counter,
-                coordinates.stream().map(this.mapper::entityToDto).collect(Collectors.toList())
+                coordinates.stream().map(this.mapper::toDto).collect(Collectors.toList())
         );
     }
 
     public CoordinatesDto findById(Integer id) {
         return coordinatesDao.findById(id)
-                .map(this.mapper::entityToDto)
+                .map(this.mapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
     @Transactional
     public CoordinatesDto create(CoordinatesWithoutIdDto coordinatesWithoutIdDto) {
-        Coordinates createdCoordinates = coordinatesDao.create(mapper.dtoToEntity(coordinatesWithoutIdDto));
-        return mapper.entityToDto(createdCoordinates);
+        Coordinates createdCoordinates = coordinatesDao.create(mapper.toEntity(coordinatesWithoutIdDto));
+        return mapper.toDto(createdCoordinates);
     }
 
     @Transactional
@@ -68,7 +68,7 @@ public class CoordinatesService {
                     return v;
                 })
                 .map(v -> coordinatesDao.update(v))
-                .map(mapper::entityToDto)
+                .map(mapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
@@ -77,11 +77,11 @@ public class CoordinatesService {
         Optional<Coordinates> coordinates = coordinatesDao.findById(id);
         return coordinates
                 .map(value -> coordinatesDao.delete(value))
-                .map(mapper::entityToDto)
+                .map(mapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
     private String getResourceExceptionMessage(Integer id) {
-        return String.format("Ну существует координаты по id = %s", id);
+        return String.format("Не существует координаты по id = %s", id);
     }
 }
