@@ -39,7 +39,7 @@ public class CoordinatesService {
 
     public Page<CoordinatesDto> findAll(CoordinatesField field, String value, SortDirection orderBy, Integer pageSize, Integer page) {
         Filter<CoordinatesField> filter = new Filter<>(field, value, orderBy);
-        Long counter = coordinatesDao.count();
+        Long counter = coordinatesDao.countPaged(filter);
         List<Coordinates> coordinates = coordinatesDao.findAllPaged(page, pageSize, filter);
         return new Page<>(
                 counter,
@@ -50,7 +50,7 @@ public class CoordinatesService {
     public CoordinatesDto findById(Integer id) {
         return coordinatesDao.findById(id)
                 .map(this.mapper::entityToDto)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Не существует координаты по id = %s", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
     @Transactional
@@ -61,15 +61,27 @@ public class CoordinatesService {
 
     @Transactional
     public CoordinatesDto updateById(Integer id, CoordinatesWithoutIdDto coordinatesWithoutIdDto) {
-        Coordinates coordinates = mapper.dtoToEntity(coordinatesWithoutIdDto);
-        coordinates.setId(id);
-        Coordinates createdCoordinates = coordinatesDao.update(coordinates);
-        return mapper.entityToDto(createdCoordinates);
+        return coordinatesDao.findById(id)
+                .map(v -> {
+                    v.setX(coordinatesWithoutIdDto.getX());
+                    v.setY(coordinatesWithoutIdDto.getY());
+                    return v;
+                })
+                .map(v -> coordinatesDao.update(v))
+                .map(mapper::entityToDto)
+                .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
     @Transactional
     public CoordinatesDto deleteById(Integer id) {
         Optional<Coordinates> coordinates = coordinatesDao.findById(id);
-        return coordinates.map(value -> mapper.entityToDto(coordinatesDao.delete(value))).orElse(null);
+        return coordinates
+                .map(value -> coordinatesDao.delete(value))
+                .map(mapper::entityToDto)
+                .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
+    }
+
+    private String getResourceExceptionMessage(Integer id) {
+        return String.format("Ну существует координаты по id = %s", id);
     }
 }

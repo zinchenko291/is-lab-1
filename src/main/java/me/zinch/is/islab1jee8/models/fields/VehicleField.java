@@ -4,7 +4,6 @@ public class VehicleField extends EnumField implements EntityField {
     public VehicleField(String value) {
         super(value, v -> v.equals(value), new String[]{"id", "name", "x", "y", "creationDate", "type", "enginePower",
                 "numberOfWheels", "capacity", "distanceTravelled", "fuelConsumption", "fuelType"});
-
     }
 
     @Override
