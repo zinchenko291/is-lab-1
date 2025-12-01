@@ -7,10 +7,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public abstract class AbstractController<E, F extends EntityField, D> {
-    protected final AbstractService<E, F, D> service;
+public abstract class AbstractController<E, F extends EntityField, D, I> {
+    protected final AbstractService<E, F, D, I> service;
 
-    protected AbstractController(AbstractService<E, F, D> service) {
+    protected AbstractController(AbstractService<E, F, D, I> service) {
         this.service = service;
     }
 
@@ -27,7 +27,7 @@ public abstract class AbstractController<E, F extends EntityField, D> {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(D dto) {
+    public Response create(I dto) {
         return Response.status(201)
                 .entity(service.create(dto))
                 .build();

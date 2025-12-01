@@ -114,20 +114,20 @@ public abstract class AbstractDao<T, F extends EntityField> implements IDao<T, F
     }
 
     @Override
-    public T create(T coordinates) {
-        em.persist(coordinates);
+    public T create(T entity) {
+        em.persist(entity);
         em.flush();
-        return coordinates;
+        return entity;
     }
 
     @Override
-    public T update(T coordinates) {
-        return em.merge(coordinates);
+    public T update(T entity) {
+        return em.merge(entity);
     }
 
     @Override
-    public T delete(T coordinates) {
-        em.remove(coordinates);
-        return coordinates;
+    public T delete(T entity) {
+        em.remove(entity);
+        return entity;
     }
 }

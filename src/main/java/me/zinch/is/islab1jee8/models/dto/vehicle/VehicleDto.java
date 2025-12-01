@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class VehicleDto {
-    @Min(1)
     private int id;
 
     @NotBlank
@@ -45,12 +44,11 @@ public class VehicleDto {
     @NotNull
     private FuelType fuelType;
 
-    @Min(1)
     public int getId() {
         return id;
     }
 
-    public void setId(@Min(1) int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

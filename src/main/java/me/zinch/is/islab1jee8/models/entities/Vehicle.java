@@ -12,7 +12,6 @@ import java.util.Date;
 public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Min(1)
     private int id;
 
     @Column(nullable = false)
@@ -20,11 +19,11 @@ public class Vehicle {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "coordinateId")
     @NotNull
     private Coordinates coordinates;
 
     @Column(nullable = false)
-    @NotNull
     private Date creationDate;
 
     @Enumerated(EnumType.STRING)
@@ -50,16 +49,15 @@ public class Vehicle {
     @Min(1)
     private double fuelConsumption;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     @NotNull
     private FuelType fuelType;
 
-    @Min(1)
     public int getId() {
         return id;
     }
 
-    public void setId(@Min(1) int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -79,11 +77,11 @@ public class Vehicle {
         this.coordinates = coordinates;
     }
 
-    public @NotNull Date getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(@NotNull Date creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 

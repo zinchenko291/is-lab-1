@@ -1,6 +1,7 @@
 package me.zinch.is.islab1jee8.controllers;
 
 import me.zinch.is.islab1jee8.models.dto.vehicle.VehicleDto;
+import me.zinch.is.islab1jee8.models.dto.vehicle.VehicleWithoutIdDto;
 import me.zinch.is.islab1jee8.models.entities.Vehicle;
 import me.zinch.is.islab1jee8.models.fields.SortDirection;
 import me.zinch.is.islab1jee8.models.fields.VehicleField;
@@ -11,8 +12,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("vehicle")
-public class VehicleController extends AbstractController<Vehicle, VehicleField, VehicleDto> {
+@Path("vehicles")
+public class VehicleController extends AbstractController<Vehicle, VehicleField, VehicleDto, VehicleWithoutIdDto> {
     @Inject
     public VehicleController(VehicleService vehicleService) {
         super(vehicleService);

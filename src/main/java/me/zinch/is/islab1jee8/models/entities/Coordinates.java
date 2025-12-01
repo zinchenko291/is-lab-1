@@ -3,6 +3,7 @@ package me.zinch.is.islab1jee8.models.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "coordinates")

@@ -1,6 +1,7 @@
 package me.zinch.is.islab1jee8.models.dao.implementations;
 
 import me.zinch.is.islab1jee8.models.dao.interfaces.IVehicleDao;
+import me.zinch.is.islab1jee8.models.entities.Coordinates;
 import me.zinch.is.islab1jee8.models.entities.FuelType;
 import me.zinch.is.islab1jee8.models.entities.Vehicle;
 import me.zinch.is.islab1jee8.models.fields.Filter;
@@ -20,6 +21,15 @@ import java.util.Optional;
 public class VehicleDao extends AbstractDao<Vehicle, VehicleField> implements IVehicleDao {
     public VehicleDao() {
         super(Vehicle.class);
+    }
+
+    @Override
+    public Vehicle create(Vehicle entity) {
+        Coordinates coordinates = em.getReference(Coordinates.class, entity.getCoordinates().getId());
+        entity.setCoordinates(coordinates);
+        em.persist(entity);
+        em.flush();
+        return entity;
     }
 
     @Override

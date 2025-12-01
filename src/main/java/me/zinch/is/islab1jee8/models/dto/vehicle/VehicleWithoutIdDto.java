@@ -1,18 +1,19 @@
 package me.zinch.is.islab1jee8.models.dto.vehicle;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import me.zinch.is.islab1jee8.models.entities.Coordinates;
+import me.zinch.is.islab1jee8.models.dto.coordinates.CoordinatesDto;
 import me.zinch.is.islab1jee8.models.entities.FuelType;
 import me.zinch.is.islab1jee8.models.entities.VehicleType;
 
-public class VehiclePostDto {
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+public class VehicleWithoutIdDto {
     @NotBlank
     private String name;
 
     @NotNull
-    private Coordinates coordinates;
+    private CoordinatesDto coordinates;
 
     private VehicleType type;
 
@@ -42,11 +43,11 @@ public class VehiclePostDto {
         this.name = name;
     }
 
-    public @NotNull Coordinates getCoordinates() {
+    public @NotNull CoordinatesDto getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(@NotNull Coordinates coordinates) {
+    public void setCoordinates(@NotNull CoordinatesDto coordinates) {
         this.coordinates = coordinates;
     }
 

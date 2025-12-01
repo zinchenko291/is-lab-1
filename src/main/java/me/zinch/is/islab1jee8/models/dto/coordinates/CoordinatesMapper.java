@@ -8,9 +8,9 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ManagedBean
 @ApplicationScoped
-public class CoordinatesMapper implements IMapper<Coordinates, CoordinatesDto> {
+public class CoordinatesMapper implements IMapper<Coordinates, CoordinatesDto, CoordinatesWithoutIdDto> {
     @Override
-    public Coordinates toEntity(CoordinatesDto coordinatesDto) {
+    public Coordinates dtoToEntity(CoordinatesDto coordinatesDto) {
         Coordinates coordinates = new Coordinates();
         coordinates.setId(coordinatesDto.getId());
         coordinates.setX(coordinatesDto.getX());
@@ -18,7 +18,8 @@ public class CoordinatesMapper implements IMapper<Coordinates, CoordinatesDto> {
         return coordinates;
     }
 
-    public Coordinates toEntity(CoordinatesWithoutIdDto coordinatesDto) {
+    @Override
+    public Coordinates idLessDtoToEntity(CoordinatesWithoutIdDto coordinatesDto) {
         Coordinates coordinates = new Coordinates();
         coordinates.setX(coordinatesDto.getX());
         coordinates.setY(coordinatesDto.getY());
@@ -26,7 +27,7 @@ public class CoordinatesMapper implements IMapper<Coordinates, CoordinatesDto> {
     }
 
     @Override
-    public CoordinatesDto toDto(Coordinates coordinates) {
+    public CoordinatesDto entityToDto(Coordinates coordinates) {
         CoordinatesDto coordinatesDto = new CoordinatesDto();
         coordinatesDto.setId(coordinates.getId());
         coordinatesDto.setX(coordinates.getX());

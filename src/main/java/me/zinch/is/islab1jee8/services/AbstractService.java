@@ -10,11 +10,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class AbstractService<E, F extends EntityField, D> {
-    protected final IDao<E, F> dao;
-    protected final IMapper<E, D> mapper;
+/**
+ * Abstract CRUD Service
+ * @param <E> Entity
+ * @param <F> EntityFields
+ * @param <D> DTO
+ * @param <I> DTO without ID field
+ */
+public abstract class AbstractService<E, F extends EntityField, D, I> {
+    protected IDao<E, F> dao;
+    protected IMapper<E, D, I> mapper;
 
-    protected AbstractService(IDao<E, F> dao, IMapper<E, D> mapper) {
+    protected AbstractService() {}
+
+    protected AbstractService(IDao<E, F> dao, IMapper<E, D, I> mapper) {
         this.dao = dao;
         this.mapper = mapper;
     }
@@ -25,20 +34,20 @@ public abstract class AbstractService<E, F extends EntityField, D> {
         List<E> coordinates = dao.findAllPaged(page, pageSize, filter);
         return new Page<>(
                 counter,
-                coordinates.stream().map(this.mapper::toDto).collect(Collectors.toList())
+                coordinates.stream().map(this.mapper::entityToDto).collect(Collectors.toList())
         );
     }
 
     public D findById(Integer id) {
         return dao.findById(id)
-                .map(this.mapper::toDto)
+                .map(this.mapper::entityToDto)
                 .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
     @Transactional
-    public D create(D dto) {
-        E createdCoordinates = dao.create(mapper.toEntity(dto));
-        return mapper.toDto(createdCoordinates);
+    public D create(I dto) {
+        E createdCoordinates = dao.create(mapper.idLessDtoToEntity(dto));
+        return mapper.entityToDto(createdCoordinates);
     }
 
     public abstract D updateById(Integer id, D dto);
@@ -48,7 +57,7 @@ public abstract class AbstractService<E, F extends EntityField, D> {
         Optional<E> coordinates = dao.findById(id);
         return coordinates
                 .map(dao::delete)
-                .map(mapper::toDto)
+                .map(mapper::entityToDto)
                 .orElseThrow(() -> new ResourceNotFoundException(getResourceExceptionMessage(id)));
     }
 
